@@ -1,5 +1,6 @@
 import src.main.java.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -65,8 +66,6 @@ public class Duke {
         this.ls.add(task);
         this.index++; // increment index
 
-        // print confirmation of adding task
-        this.confirmAddTask(task);
     }
 
     // mark task as done
@@ -141,7 +140,101 @@ public class Duke {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
 
-    public static void main(String[] args) throws DukeException {
+    // checks if hard disk file directory exists
+    public boolean checkIfFileExists() {
+        String home = System.getProperty("user.home");
+
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data", "duke.txt");
+        return java.nio.file.Files.exists(path);
+    }
+
+    // add task to hard disk file
+    public void addTasksToFile(FileWriter writer) {
+        try {
+            if (writer != null) {
+                for (Task task : this.ls) {
+                    // get details about task
+                    String item = task.getItem();
+                    String status = task.getStatus();
+                    String taskType = task.getSign();
+
+                    // check task type
+                    if (task instanceof Todo) { // if task is to-do
+                        writer.write(taskType + " / " + status + " / " + item + "\n");
+                    } else if (task instanceof Deadline) { // if task is deadline
+                        Deadline actualTask = (Deadline) task;
+                        writer.write(taskType + " / " +  status + " / " + item + " / " + actualTask.getDeadline() + "\n");
+                    } else { // if task is event
+                        Event actualTask = (Event) task;
+                        writer.write(taskType + " / " + status + " / " + item + " / " + actualTask.getTime() + "\n");
+                    }
+                }
+            } else {
+                throw new IOException("invalid writer");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred: invalid writer");
+//            e.printStackTrace();
+        }
+    }
+
+    public void loadDataFromFile(File file) {
+        Scanner sc = null;
+        try {
+            if (file != null) {
+                sc = new Scanner(file);
+
+                while(sc.hasNextLine()) {
+                    String line = sc.nextLine();
+
+                    String[] arr = line.split(" / ", 3);
+                    String taskType = arr[0];
+                    String status = arr[1];
+                    String restOfTask = arr[2];
+
+                    if (taskType.equals("<T>")) { // if task is a to-do
+                        Task task = new Todo(restOfTask, "T");
+                        if (status.equals("[\u2713]")) { // task is done
+                            task.markAsDone();
+                        }
+                        this.addToList(task);
+                    } else if (taskType.equals("<D>")) { // if task is a deadline
+                        String[] taskArr = restOfTask.split(" / ");
+                        String item = taskArr[0];
+                        String deadline = taskArr[1];
+                        Task task = new Deadline(item, "D",  deadline);
+
+                        if (status.equals("[\u2713]")) { // task is done
+                            task.markAsDone();
+                        }
+
+                        this.addToList(task);
+                    } else { // if task is an event
+                        String[] taskArr = restOfTask.split(" / ");
+                        String item = taskArr[0];
+                        String deadline = taskArr[1];
+                        Task task = new Event(item, "E", deadline);
+
+                        if (status.equals("[\u2713]")) {
+                            task.markAsDone();
+                        }
+
+                        this.addToList(task);
+                    }
+                }
+            } else {
+                throw new FileNotFoundException("File not found");
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!!");
+//            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void main(String[] args) {
 
         String logo = "     .\"\".    .\"\",\n" +
                 "     |  |   /  /\n" +
@@ -164,101 +257,129 @@ public class Duke {
         // instantiate duke object
         Duke klaun = new Duke();
 
-        // introduce duke
-        klaun.introDuke();
+        try {
+            if (klaun.checkIfFileExists()) {
+                File file = new File("data/duke.txt");
+                klaun.loadDataFromFile(file);
 
-        // get input
-        String input = "";
+                // introduce duke
+                klaun.introDuke();
 
-        // checks for next line of input
-        while (sc.hasNextLine()) {
-            input = sc.nextLine();
+                // get input
+                String input = "";
 
-            try {
-                if (input.equals("bye")) {
-                    klaun.sayBye();
-                    break;
-                } else if (input.equals("list")) { // if user calls for list
-                    klaun.getList();
-                } else if (input.split(" ")[0].equals("done")) { // if its "done x"
+                // checks for next line of input
+                while (sc.hasNextLine()) {
+                    input = sc.nextLine();
+
                     try {
-                        if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= klaun.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
-                            klaun.markDone(parseInt(input.split(" ", 2)[1]) - 1);
-                        } else {
-                            throw new DukeException("invalid input: " + input);
+                        if (input.equals("bye")) {
+                            klaun.sayBye();
+                            FileWriter writer = new FileWriter(file);
+                            klaun.addTasksToFile(writer);
+                            writer.close();
+                            break;
+                        } else if (input.equals("list")) { // if user calls for list
+                            klaun.getList();
+                        } else if (input.split(" ")[0].equals("done")) { // if its "done x"
+                            try {
+                                if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= klaun.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+                                    klaun.markDone(parseInt(input.split(" ", 2)[1]) - 1);
+                                } else {
+                                    throw new DukeException("invalid input: " + input);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                                System.out.println("Oops ... you should provide a valid task number to complete ~ \n");
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                            }
+                        } else if (input.split(" ")[0].equals("todo")) { // if task type is to-do
+                            try {
+                                if (input.contains(" ")) {
+                                    String[] arr = input.split(" ", 2); // split input to get task item
+                                    Task task = new Todo(arr[1], "T");
+
+                                    // add item to list
+                                    klaun.addToList(task); // add to-do task to ls
+
+                                    // print confirmation of adding task
+                                    klaun.confirmAddTask(task);
+                                } else {
+                                    throw new DukeException("invalid input: " + input);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                                System.out.println("Oh no !! I think you forgot to add your todo description :O\n");
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                            }
+                        } else if (input.split(" ")[0].equals("deadline")) { // if task type is deadline
+                            try {
+                                if (input.contains(" ") && input.contains("/by")) {
+                                    String[] arr = input.split("/by", 2); // split to get deadline of task
+                                    String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
+                                    Task task = new Deadline(item, "D", arr[1]);
+
+                                    // add item to list
+                                    klaun.addToList(task);
+
+                                    // print confirmation of adding task
+                                    klaun.confirmAddTask(task);
+                                } else { // if format of deadline task is wrong
+                                    throw new DukeException("invalid input: " + input);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                                System.out.println("Oh no !! Your format should be \"deadline ____ /by ____\" \n");
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                            }
+                        } else if (input.split(" ")[0].equals("event")) { // if task type is deadline
+                            try {
+                                if (input.contains(" ") && input.contains("/at")) {
+                                    String[] arr = input.split("/at", 2); // split to get time of task
+                                    String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
+                                    Task task = new Event(item, "E", arr[1]);
+
+                                    // add item to list
+                                    klaun.addToList(task);
+
+                                    // print confirmation of adding task
+                                    klaun.confirmAddTask(task);
+                                } else { // if format of event task is wrong
+                                    throw new DukeException("invalid input: " + input);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                                System.out.println("Oh no !! Your format should be \"event ____ /at ____\" \n");
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                            }
+                        } else if (input.split(" ")[0].equals("delete")) {
+                            try {
+                                if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= klaun.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+                                    klaun.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
+                                } else {
+                                    throw new DukeException("invalid input: " + input);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                                System.out.println("Oops ... you should provide a valid task number to delete ~ \n");
+                                System.out.println("??????????????????????????????????????????????????????????????\n");
+                            }
+                        } else { // if input is not a task
+                            throw new DukeException(input);
                         }
                     } catch (Exception e) {
                         System.out.println("??????????????????????????????????????????????????????????????\n");
-                        System.out.println("Oops ... you should provide a valid task number to complete ~ \n");
+                        System.out.println("invalid input :(\n");
                         System.out.println("??????????????????????????????????????????????????????????????\n");
                     }
-                } else if (input.split(" ")[0].equals("todo")) { // if task type is to-do
-                    try {
-                        if (input.contains(" ")) {
-                            String[] arr = input.split(" ", 2); // split input to get task item
-
-                            // add item to list
-                            klaun.addToList(new Todo(arr[1], "T")); // add to-do task to ls
-                        } else {
-                            throw new DukeException("invalid input: " + input);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                        System.out.println("Oh no !! I think you forgot to add your todo description :O\n");
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                    }
-                } else if (input.split(" ")[0].equals("deadline")) { // if task type is deadline
-                    try {
-                        if (input.contains(" ") && input.contains("/by")) {
-                            String[] arr = input.split("/by", 2); // split to get deadline of task
-                            String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
-
-                            // add item to list
-                            klaun.addToList(new Deadline(item, "D", arr[1]));
-                        } else { // if format of deadline task is wrong
-                            throw new DukeException("invalid input: " + input);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                        System.out.println("Oh no !! Your format should be \"deadline ____ /by ____\" \n");
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                    }
-                } else if (input.split(" ")[0].equals("event")) { // if task type is deadline
-                    try {
-                        if (input.contains(" ") && input.contains("/at")) {
-                            String[] arr = input.split("/at", 2); // split to get time of task
-                            String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
-
-                            // add item to list
-                            klaun.addToList(new Event(item, "E", arr[1]));
-                        } else { // if format of event task is wrong
-                            throw new DukeException("invalid input: " + input);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                        System.out.println("Oh no !! Your format should be \"event ____ /at ____\" \n");
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                    }
-                } else if (input.split(" ")[0].equals("delete")) {
-                    try {
-                        if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= klaun.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
-                            klaun.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
-                        } else {
-                            throw new DukeException("invalid input: " + input);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                        System.out.println("Oops ... you should provide a valid task number to delete ~ \n");
-                        System.out.println("??????????????????????????????????????????????????????????????\n");
-                    }
-                } else { // if input is not a task
-                    throw new DukeException(input);
                 }
-            } catch (Exception e) {
-                System.out.println("??????????????????????????????????????????????????????????????\n");
-                System.out.println("invalid input :(\n");
-                System.out.println("??????????????????????????????????????????????????????????????\n");
+            } else {
+                throw new IOException("File not found");
             }
+        } catch (IOException e) {
+            System.out.println("File does not exist!!");
+//            e.printStackTrace();
         }
+
     }
 }
