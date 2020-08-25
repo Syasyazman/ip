@@ -1,9 +1,20 @@
-import src.main.java.*;
+import src.main.java.Task;
+import src.main.java.Todo;
+import src.main.java.Deadline;
+import src.main.java.Event;
+import src.main.java.DukeException;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 import static java.lang.Integer.parseInt;
 
@@ -49,10 +60,10 @@ public class Duke {
                 System.out.println(num + ". " + taskType + " " + status + " " + item);
             } else if (task instanceof Deadline) { // if task is deadline
                 Deadline actualTask = (Deadline) task;
-                System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by :" + actualTask.getDeadline());
+                System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline());
             } else { // if task type if event
                 Event actualTask = (Event) task;
-                System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at :" + actualTask.getTime());
+                System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime());
             }
 
         }
@@ -65,7 +76,6 @@ public class Duke {
     public void addToList(Task task) {
         this.ls.add(task);
         this.index++; // increment index
-
     }
 
     // mark task as done
@@ -84,10 +94,10 @@ public class Duke {
             System.out.println(num + ". " + taskType + " " + status + " " + item + "\n");
         } else if (task instanceof Deadline) { // if task is deadline
             Deadline actualTask = (Deadline) task;
-            System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by :" + actualTask.getDeadline() + "\n");
+            System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n");
         } else { // if task is event
             Event actualTask = (Event) task;
-            System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at :" + actualTask.getTime() + "\n");
+            System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n");
         }
         System.out.println("==============================================================\n");
     }
@@ -104,10 +114,10 @@ public class Duke {
             System.out.println(taskType + " " + status + " " + item + "\n");
         } else if (task instanceof Deadline) { // if task is deadline
             Deadline actualTask = (Deadline) task;
-            System.out.println(taskType + " " +  status + " " + item + " -> by :" + actualTask.getDeadline() + "\n");
+            System.out.println(taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n");
         } else { // if task is event
             Event actualTask = (Event) task;
-            System.out.println(taskType + " " + status + " " + item + " -> at :" + actualTask.getTime() + "\n");
+            System.out.println(taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n");
         }
 
         System.out.println("You have a total of " + this.index + " task(s) in your list !\n");
@@ -131,10 +141,10 @@ public class Duke {
             System.out.println(num + ". " + taskType + " " + status + " " + item + "\n");
         } else if (task instanceof Deadline) { // if task is deadline
             Deadline actualTask = (Deadline) task;
-            System.out.println(taskType + " " +  status + " " + item + " -> by :" + actualTask.getDeadline() + "\n");
+            System.out.println(taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n");
         } else { // if task is event
             Event actualTask = (Event) task;
-            System.out.println(taskType + " " + status + " " + item + " -> at :" + actualTask.getTime() + "\n");
+            System.out.println(taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n");
         }
         System.out.println("You now have " + this.index + " task(s) in your list !\n");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -234,7 +244,25 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) {
+    // returns date as LocalDate type
+    public LocalDate convertToLocalDate(String strDate){
+        List<String> dateFormats = Arrays.asList("yyyy-MM-dd HH:mm", "yyyy-MM-dd", "yyyy-M-d", "yyyy-M-dd",
+                "yyyy-MM-d", "yyyy/MM/dd", "yyyy/M/d", "yyyy/M/dd", "yyyy/MM/d");
+
+        // loop through each possible format and check if strDate can be parsed
+        for(String format: dateFormats){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            try{
+                return LocalDate.parse(strDate, formatter);
+            } catch (Exception e) {
+                // intentionally empty
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
+    }
+
+    public static void main(String[] args) throws DukeException {
 
         String logo = "     .\"\".    .\"\",\n" +
                 "     |  |   /  /\n" +
@@ -315,9 +343,17 @@ public class Duke {
                         } else if (input.split(" ")[0].equals("deadline")) { // if task type is deadline
                             try {
                                 if (input.contains(" ") && input.contains("/by")) {
-                                    String[] arr = input.split("/by", 2); // split to get deadline of task
+                                    String[] arr = input.split("/by ", 2); // split to get deadline of task
                                     String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
-                                    Task task = new Deadline(item, "D", arr[1]);
+                                    LocalDate date = null;
+
+                                    try {
+                                        date = klaun.convertToLocalDate(arr[1]);
+                                    } catch (IllegalArgumentException e) {
+                                        // intentionally empty
+                                    }
+
+                                    Task task = new Deadline(item, "D", arr[1], date);
 
                                     // add item to list
                                     klaun.addToList(task);
@@ -335,9 +371,17 @@ public class Duke {
                         } else if (input.split(" ")[0].equals("event")) { // if task type is deadline
                             try {
                                 if (input.contains(" ") && input.contains("/at")) {
-                                    String[] arr = input.split("/at", 2); // split to get time of task
+                                    String[] arr = input.split("/at ", 2); // split to get time of task
                                     String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
-                                    Task task = new Event(item, "E", arr[1]);
+                                    LocalDate date = null;
+
+                                    try {
+                                        date = klaun.convertToLocalDate(arr[1]);
+                                    } catch (IllegalArgumentException e) {
+                                        // intentionally empty
+                                    }
+
+                                    Task task = new Event(item, "E", arr[1], date);
 
                                     // add item to list
                                     klaun.addToList(task);
@@ -376,10 +420,9 @@ public class Duke {
             } else {
                 throw new IOException("File not found");
             }
-        } catch (IOException e) {
+        } catch(IOException e){
             System.out.println("File does not exist!!");
-//            e.printStackTrace();
+//              e.printStackTrace();
         }
-
     }
 }
