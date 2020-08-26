@@ -1,6 +1,5 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import src.main.java.*;
-
 
 import java.io.File;
 import java.io.FileWriter;

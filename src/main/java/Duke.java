@@ -1,10 +1,4 @@
-import src.main.java.Command;
-import src.main.java.DukeException;
-import src.main.java.Parser;
-import src.main.java.Storage;
-import src.main.java.TaskList;
-import src.main.java.Ui;
-import src.main.java.ExitCommand;
+package src.main.java;
 
 import java.util.ArrayList;
 

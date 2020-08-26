@@ -9,6 +9,13 @@ public class EventCommand extends Command {
         this.input = input;
     }
 
+    /**
+     * Creates a task of event type and adds it to task list
+     *
+     * @param tasks a TaskList that contains a list of tasks
+     * @param ui a Ui that interacts with user
+     * @param storage a Storage that deals with hard disk file
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (input.contains(" ") && input.contains("/at")) {

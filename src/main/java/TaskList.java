@@ -12,25 +12,40 @@ public class TaskList {
         this.index = ls.size();
     }
 
+    // returns length of task list
     public int getIndex() {
         return this.index;
     }
 
+    // returns task list
     public List<Task> getls() {
         return this.ls;
     }
 
-    // adds task to list
+    /**
+     * Adds task to task list
+     *
+     * @param task a Task that is to be added into task list
+     */
     public void addToList(Task task) {
         this.ls.add(task);
         this.index++; // increment index
     }
 
-    // mark task as done
+    /**
+     * Marks task as completed in task list
+     *
+     * @param index an integer that represents the task number
+     */
     public void markDone(int index) {
         this.ls.get(index).markAsDone();
     }
 
+    /**
+     * Deletes task in the task list
+     *
+     * @param index an integer that represents the task number
+     */
     public void deleteTask(int index) {
         Task task = this.ls.get(index);
         String item = task.getItem();

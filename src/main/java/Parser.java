@@ -1,6 +1,13 @@
 package src.main.java;
 
 public class Parser {
+
+    /**
+     * Makes sense of user input
+     *
+     * @param input a String that represents user's input
+     * @return user's input as a specific command
+     */
     public static Command parse(String input) {
         if (input.equals("bye")) { // if user wants to exit task list
             return new ExitCommand();
