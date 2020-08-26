@@ -43,7 +43,7 @@ public class Ui {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     }
 
-    // gets next line of user input
+    // returns next line of user input
     public String getInput() {
         if (this.sc.hasNextLine()) {
             return this.sc.nextLine();
@@ -79,6 +79,7 @@ public class Ui {
         System.out.println("##############################################################\n");
     }
 
+    // prints out confirmation of task completion
     public void printMarkDone(int index, List<Task> ls) {
         Task task = ls.get(index);
         String item = task.getItem();

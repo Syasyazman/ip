@@ -133,4 +133,8 @@ public class Storage {
         this.addTasksToFile(writer, tasks.getls());
         writer.close();
     }
+
+    public File getFile() {
+        return this.file;
+    }
 }

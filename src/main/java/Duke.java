@@ -57,8 +57,6 @@ public class Duke {
         }
     }
 
-
-
     public static void main(String[] args) throws DukeException {
         // instantiate duke object
         Duke klaun = new Duke("data/duke.txt");
