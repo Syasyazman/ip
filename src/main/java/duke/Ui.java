@@ -2,12 +2,14 @@ package duke;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.Scanner;
 
 public class Ui {
-    Scanner sc;
+    protected Scanner sc;
 
     public Ui() {
         this.sc = new Scanner(System.in);

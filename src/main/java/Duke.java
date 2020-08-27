@@ -11,7 +11,7 @@ public class Duke {
         this.storage = new Storage(filepath);
         this.ui = new Ui();
         try {
-            if (storage.checkIfFileExists()) {
+            if (storage.hasFile()) {
                 this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
             } else {
                 throw new DukeException("file does not exist");
