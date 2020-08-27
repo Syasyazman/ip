@@ -1,13 +1,9 @@
 import org.junit.jupiter.api.Test;
-import src.main.java.*;
+import src.main.java.duke.command.*;
+import src.main.java.duke.*;
 
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

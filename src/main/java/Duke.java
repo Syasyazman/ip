@@ -1,10 +1,4 @@
-import src.main.java.Command;
-import src.main.java.DukeException;
-import src.main.java.Parser;
-import src.main.java.Storage;
-import src.main.java.TaskList;
-import src.main.java.Ui;
-import src.main.java.ExitCommand;
+import duke.*;
 
 import java.util.ArrayList;
 
@@ -29,7 +23,7 @@ public class Duke {
     }
 
     public void run() {
-        // introduce duke
+        // introduce src.main.java.duke
         this.ui.introDuke();
 
         // get input
@@ -58,7 +52,7 @@ public class Duke {
     }
 
     public static void main(String[] args) throws DukeException {
-        // instantiate duke object
+        // instantiate src.main.java.duke object
         Duke klaun = new Duke("data/duke.txt");
         klaun.run();
     }

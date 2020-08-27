@@ -1,4 +1,4 @@
-package src.main.java;
+package duke;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ public class Storage {
     public boolean checkIfFileExists() {
         String home = System.getProperty("user.home");
 
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data", "duke.txt");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data", "src.main.java.duke.txt");
         return java.nio.file.Files.exists(path);
     }
 

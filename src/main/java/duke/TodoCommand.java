@@ -1,4 +1,4 @@
-package src.main.java;
+package duke;
 
 public class TodoCommand extends Command {
     protected String input;

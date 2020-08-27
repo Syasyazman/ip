@@ -1,6 +1,4 @@
-package src.main.java;
-
-import java.time.LocalDate;
+package duke;
 
 import static java.lang.Integer.parseInt;
 
