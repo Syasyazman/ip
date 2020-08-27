@@ -141,6 +141,40 @@ public class Ui {
         throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
     }
 
+    // prints list of task that matches search
+    public void showSearchResults(List<Task> ls) {
+        System.out.println("##############################################################\n");
+        System.out.println("Here's your search result(s) :");
+        for (int i = 0; i < ls.size(); i++) {
+            Task task = ls.get(i);
+            String item = task.getItem();
+            String status = task.getStatus();
+            String taskType = task.getSign();
+            int num = i + 1;
+
+            if (task instanceof Todo) { // if task is to-do
+                System.out.println(num + ". " + taskType + " " + status + " " + item);
+            } else if (task instanceof Deadline) { // if task is deadline
+                Deadline actualTask = (Deadline) task;
+                System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline());
+            } else { // if task type if event
+                Event actualTask = (Event) task;
+                System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime());
+            }
+
+        }
+
+        System.out.println(" ");
+        System.out.println("##############################################################\n");
+    }
+
+    // prints empty search results
+    public void showEmptySearchResults() {
+        System.out.println("##############################################################\n");
+        System.out.println("Sorry there are no results that match your search :((\n");
+        System.out.println("##############################################################\n");
+    }
+
     public void showFileLoadingError() {
         System.out.println("??????????????????????????????????????????????????????????????\n");
         System.out.println("File cannot be loaded !! \n");
