@@ -1,10 +1,4 @@
-import src.main.java.Command;
-import src.main.java.DukeException;
-import src.main.java.Parser;
-import src.main.java.Storage;
-import src.main.java.TaskList;
-import src.main.java.Ui;
-import src.main.java.ExitCommand;
+package src.main.java;
 
 import java.util.ArrayList;
 
@@ -17,7 +11,7 @@ public class Duke {
         this.storage = new Storage(filepath);
         this.ui = new Ui();
         try {
-            if (storage.checkIfFileExists()) {
+            if (storage.hasFile()) {
                 this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
             } else {
                 throw new DukeException("file does not exist");

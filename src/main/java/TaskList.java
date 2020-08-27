@@ -1,11 +1,10 @@
 package src.main.java;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
-    List<Task> ls;
-    int index;
+    protected List<Task> ls;
+    protected int index;
 
     public TaskList(List<Task> ls) {
         this.ls = ls;

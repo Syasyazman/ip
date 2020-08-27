@@ -1,7 +1,5 @@
 package src.main.java;
 
-import java.time.LocalDate;
-
 import static java.lang.Integer.parseInt;
 
 public class DeleteCommand extends Command {

@@ -10,8 +10,6 @@ public class DeadlineCommand extends Command {
     }
 
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-
-
         try {
             if (input.contains(" ") && input.contains("/by")) {
                 String[] arr = input.split("/by ", 2); // split to get deadline of task

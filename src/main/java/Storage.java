@@ -4,20 +4,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Scanner;
 
 public class Storage {
-    File file;
+    protected File file;
 
     public Storage(String filepath) {
         this.file = new File(filepath);
     }
 
     // checks if hard disk file directory exists
-    public boolean checkIfFileExists() {
+    public boolean hasFile() {
         String home = System.getProperty("user.home");
 
         java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data", "duke.txt");
