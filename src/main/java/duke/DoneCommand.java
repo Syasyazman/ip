@@ -1,4 +1,4 @@
-package src.main.java;
+package duke;
 
 import static java.lang.Integer.parseInt;
 

@@ -1,4 +1,4 @@
-package src.main.java;
+package duke;
 
 public class DukeException extends Exception {
 
