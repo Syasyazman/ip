@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
-import src.main.java.duke.command.*;
-import src.main.java.duke.*;
+import duke.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

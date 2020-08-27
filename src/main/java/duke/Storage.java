@@ -16,7 +16,11 @@ public class Storage {
         this.file = new File(filepath);
     }
 
-    // checks if hard disk file directory exists
+    /**
+     * checks if hard disk file directory exists
+     *
+     * @return whether the hard disk file exists
+     */
     public boolean checkIfFileExists() {
         String home = System.getProperty("user.home");
 
@@ -24,7 +28,12 @@ public class Storage {
         return java.nio.file.Files.exists(path);
     }
 
-    // add task to hard disk file
+    /**
+     * Writes task to hard disk file
+     *
+     * @param writer a FileWriter to write content into hard disk file
+     * @param ls a List that contains task list
+     */
     public void addTasksToFile(FileWriter writer, List<Task> ls) {
         try {
             if (writer != null) {
@@ -53,6 +62,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Retrieves hard disk file's data into a task list
+     *
+     * @param ui a Ui that interacts with user
+     * @return a list of tasks to be added to task list
+     */
     public List<Task> loadDataFromFile(Ui ui) {
         Scanner sc = null;
         List<Task> ls = new ArrayList<>();
@@ -128,12 +143,19 @@ public class Storage {
         return ls;
     }
 
+    /**
+     * Adds tasks to hard disk file
+     *
+     * @param tasks a TaskList that contains a list of tasks
+     * @throws IOException
+     */
     public void writeToFile(TaskList tasks) throws IOException {
         FileWriter writer = new FileWriter(file);
         this.addTasksToFile(writer, tasks.getls());
         writer.close();
     }
 
+    // returns hard disk file
     public File getFile() {
         return this.file;
     }

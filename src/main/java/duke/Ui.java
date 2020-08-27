@@ -36,7 +36,7 @@ public class Ui {
         System.out.println("<------------------------------------------------------------>\n");
     }
 
-    // prints output based on command
+    // prints exit message for klaun
     public void sayBye() {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         System.out.println("oh man ... bye ~~ o.o \n");
@@ -52,7 +52,12 @@ public class Ui {
         }
     }
 
-    // prints list of tasks
+    /**
+     * Provides user with task list
+     *
+     * @param index an integer representing length of task list
+     * @param ls a List containing user's tasks
+     */
     public void getList(int index, List<Task> ls) {
         System.out.println("##############################################################\n");
         System.out.println("Here's your amazing task list :");
@@ -79,7 +84,12 @@ public class Ui {
         System.out.println("##############################################################\n");
     }
 
-    // prints out confirmation of task completion
+    /**
+     * Provides user with confirmation of task completion
+     *
+     * @param index an integer representing completed task's number
+     * @param ls a List containing user's tasks
+     */
     public void printMarkDone(int index, List<Task> ls) {
         Task task = ls.get(index);
         String item = task.getItem();
@@ -101,7 +111,12 @@ public class Ui {
         System.out.println("==============================================================\n");
     }
 
-    // print task that has just been added
+    /**
+     * Prints the task that has just been added to task list
+     *
+     * @param task user's task
+     * @param index an integer representing number of total tasks
+     */
     public void confirmAddTask(Task task, int index) {
         String item = task.getItem();
         String status = task.getStatus();
@@ -123,7 +138,12 @@ public class Ui {
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
     }
 
-    // returns date as LocalDate type
+    /**
+     * Returns date in local date format
+     *
+     * @param strDate a String of date given by user input
+     * @return a date in local date format
+     */
     public LocalDate convertToLocalDate(String strDate) {
         List<String> dateFormats = Arrays.asList("yyyy-MM-dd HH:mm", "yyyy-MM-dd", "yyyy-M-d", "yyyy-M-dd",
                 "yyyy-MM-d", "yyyy/MM/dd", "yyyy/M/d", "yyyy/M/dd", "yyyy/MM/d");

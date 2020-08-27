@@ -11,19 +11,22 @@ public abstract class Task {
         this.sign = "<" + sign + ">";
     }
 
-    // marks status of task as done
+    // marks task as completed
     public void markAsDone() {
         this.isCompleted = true;
     }
 
+    // returns task item
     public String getItem() {
         return this.item;
     }
 
+    // returns status of task
     public String getStatus() {
         return this.isCompleted ? "[\u2713]" : "[\u2718]";
     }
 
+    // returns sign of task
     public String getSign() {
         return this.sign;
     }

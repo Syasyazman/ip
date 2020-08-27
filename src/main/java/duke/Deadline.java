@@ -13,7 +13,7 @@ public class Deadline extends Task {
         this.date = date;
     }
 
-    // get deadline of task
+    // returns deadline of task
     public String getDeadline() {
         return date != null
                 ? this.date.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
