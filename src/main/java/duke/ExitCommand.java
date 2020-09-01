@@ -2,6 +2,9 @@ package duke;
 
 import java.io.IOException;
 
+/**
+ * Command that handles termination of Duke
+ */
 public class ExitCommand extends Command {
 
     /**
@@ -11,6 +14,7 @@ public class ExitCommand extends Command {
      * @param ui a Ui that interacts with user
      * @param storage a Storage that deals with hard disk file
      */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.sayBye();
         try {

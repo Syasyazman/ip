@@ -2,6 +2,9 @@ package duke;
 
 import java.util.List;
 
+/**
+ * Command that handles retrieval of task list in TaskList
+ */
 public class ListCommand extends Command {
 
     /**
@@ -11,6 +14,7 @@ public class ListCommand extends Command {
      * @param ui a Ui that interacts with user
      * @param storage a Storage that deals with hard disk file
      */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> ls = tasks.getls();
         int index = tasks.getIndex();

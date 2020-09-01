@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Handles and makes sense of user input
+ */
 public class Parser {
 
     /**

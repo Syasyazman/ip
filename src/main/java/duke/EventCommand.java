@@ -2,6 +2,9 @@ package duke;
 
 import java.time.LocalDate;
 
+/**
+ * Command that handles instantiation of Event tasks in TaskList
+ */
 public class EventCommand extends Command {
     protected String input;
 
@@ -16,6 +19,7 @@ public class EventCommand extends Command {
      * @param ui a Ui that interacts with user
      * @param storage a Storage that deals with hard disk file
      */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (input.contains(" ") && input.contains("/at")) {

@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Command that handles instantiation of To-do tasks in TaskList
+ */
 public class TodoCommand extends Command {
     protected String input;
 
@@ -14,6 +17,7 @@ public class TodoCommand extends Command {
      * @param ui a Ui that interacts with user
      * @param storage a Storage that deals with hard disk file
      */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (input.contains(" ")) {

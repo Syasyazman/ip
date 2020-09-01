@@ -8,6 +8,9 @@ import java.util.List;
 
 import java.util.Scanner;
 
+/**
+ * Handles input from user interactions
+ */
 public class Ui {
     protected Scanner sc;
 

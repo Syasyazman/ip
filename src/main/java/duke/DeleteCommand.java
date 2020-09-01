@@ -2,6 +2,9 @@ package duke;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Command that handles deletion of tasks in TaskList
+ */
 public class DeleteCommand extends Command {
     protected String input;
 
@@ -16,6 +19,7 @@ public class DeleteCommand extends Command {
      * @param ui a Ui that interacts with user
      * @param storage a Storage that deals with hard disk file
      */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {

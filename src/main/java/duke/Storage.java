@@ -12,6 +12,9 @@ import java.util.List;
 
 import java.util.Scanner;
 
+/**
+ * Handles storage of tasks in a hard disk file
+ */
 public class Storage {
     protected File file;
 

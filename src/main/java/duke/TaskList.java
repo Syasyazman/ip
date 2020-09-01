@@ -2,6 +2,9 @@ package duke;
 
 import java.util.List;
 
+/**
+ * Handles operations regarding user task list
+ */
 public class TaskList {
     protected List<Task> ls;
     protected int index;

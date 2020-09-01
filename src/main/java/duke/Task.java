@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Stores information of tasks created by user
+ */
 public abstract class Task {
     protected String item;
     protected boolean isCompleted;

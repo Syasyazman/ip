@@ -2,6 +2,9 @@ import duke.*;
 
 import java.util.ArrayList;
 
+/**
+ * Main class for Duke
+ */
 public class Duke {
     private Storage storage;
     private TaskList tasks;
