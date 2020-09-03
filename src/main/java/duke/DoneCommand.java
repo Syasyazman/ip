@@ -33,4 +33,20 @@ public class DoneCommand extends Command {
             ui.showInvalidTaskNumberError();
         }
     }
+
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        try {
+            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+                int index = parseInt(input.split(" ", 2)[1]) - 1;
+                tasks.markDone(index);
+
+                return guiui.printDone(index, tasks.getls());
+            } else {
+                throw new DukeException("invalid input: " + input);
+            }
+        } catch (Exception e) {
+            return guiui.showInvalidTaskNumber();
+        }
+    }
 }

@@ -37,4 +37,25 @@ public class TodoCommand extends Command {
             ui.showInvalidTodoFormatError();
         }
     }
+
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        try {
+            if (input.contains(" ")) {
+                String[] arr = input.split(" ", 2); // split input to get task item
+
+                Task task = new Todo(arr[1], "T");
+
+                // add item to list
+                tasks.addToList(task); // add to-do task to ls
+
+                // print confirmation of adding task
+                return guiui.confirmAddToTaskList(task, tasks.getIndex());
+            } else {
+                throw new DukeException("invalid input: " + input);
+            }
+        } catch (Exception e) {
+            return guiui.showInvalidTodoFormat();
+        }
+    }
 }

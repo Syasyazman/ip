@@ -16,11 +16,21 @@ public class ExitCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.sayBye();
         try {
             storage.writeToFile(tasks);
+            ui.sayBye();
         } catch (IOException e) {
             ui.showUnsuccessfulFileWriteError();
+        }
+    }
+
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        try {
+            storage.writeToFile(tasks);
+            return guiui.printBye();
+        } catch (IOException e) {
+            return guiui.showUnsuccessfulFileWrite();
         }
     }
 }

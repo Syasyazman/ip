@@ -6,4 +6,8 @@ package duke;
 public abstract class Command {
 
     public void execute(TaskList tasks, Ui ui, Storage storage) {};
+
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        return null;
+    };
 }

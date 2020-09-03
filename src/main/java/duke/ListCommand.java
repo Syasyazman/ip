@@ -20,4 +20,11 @@ public class ListCommand extends Command {
         int index = tasks.getIndex();
         ui.getList(index, ls);
     }
+
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        List<Task> ls = tasks.getls();
+        int index = tasks.getIndex();
+        return guiui.getTaskList(index, ls);
+    }
 }

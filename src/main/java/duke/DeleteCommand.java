@@ -32,4 +32,17 @@ public class DeleteCommand extends Command {
         }
     }
 
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        try {
+            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+                tasks.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
+                return "Successfully deleted!!";
+            } else {
+                throw new DukeException("invalid input: " + input);
+            }
+        } catch (Exception e) {
+            return guiui.showInvalidDeleteTask();
+        }
+    }
 }

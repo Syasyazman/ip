@@ -38,4 +38,23 @@ public class FindCommand extends Command {
             ui.showEmptySearchResults();
         }
     }
+
+    @Override
+    public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
+        List<Task> ls = tasks.getls();
+        List<Task> output = new ArrayList<>();
+
+        // adds tasks which contains user input as substring
+        for (Task task : ls) {
+            if (task.getItem().contains(this.input)) {
+                output.add(task);
+            }
+        }
+
+        if (!output.isEmpty()) {
+            return guiui.showSearch(output);
+        } else {
+            return guiui.showEmptySearch();
+        }
+    }
 }
