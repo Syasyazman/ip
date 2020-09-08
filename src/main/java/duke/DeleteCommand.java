@@ -22,7 +22,8 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
-            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() &&
+                    parseInt(input.split(" ", 2)[1]) > 0) {
                 tasks.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
             } else {
                 throw new DukeException("invalid input: " + input);
@@ -32,10 +33,19 @@ public class DeleteCommand extends Command {
         }
     }
 
+    /**
+     * Deletes task from task list. Then returns response to user
+     *
+     * @param tasks a TaskList that contains a list of tasks
+     * @param guiui a GuiUi that interacts with user
+     * @param storage a Storage that deals with hard disk file
+     * @return a message response to user in String
+     */
     @Override
     public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
         try {
-            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() && parseInt(input.split(" ", 2)[1]) > 0) {
+            if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() &&
+                    parseInt(input.split(" ", 2)[1]) > 0) {
                 tasks.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
                 return "Successfully deleted!!";
             } else {

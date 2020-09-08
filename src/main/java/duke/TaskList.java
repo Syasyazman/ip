@@ -14,12 +14,20 @@ public class TaskList {
         this.index = ls.size();
     }
 
-    // returns length of task list
+    /**
+     * returns length of task list
+     *
+     * @return integer index of last item in task list
+     */
     public int getIndex() {
         return this.index;
     }
 
-    // returns task list
+    /**
+     * returns task list
+     *
+     * @return list of tasks
+     */
     public List<Task> getls() {
         return this.ls;
     }

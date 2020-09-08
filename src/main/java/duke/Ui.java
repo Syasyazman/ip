@@ -36,19 +36,25 @@ public class Ui {
 
         System.out.println("HIIIIII\n" + logo + "\n");
 
-        System.out.println("I'm Klaun (=^.^=) How are you doing today ?\n");
+        System.out.println("I'm Deku (=^.^=) How are you doing today ?\n");
         System.out.println("Is there anything I can help you with ?\n");
         System.out.println("<------------------------------------------------------------>\n");
     }
 
-    // prints exit message for klaun
+    /**
+     * prints exit message for deku
+     */
     public void sayBye() {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         System.out.println("oh man ... bye ~~ o.o \n");
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     }
 
-    // returns next line of user input
+    /**
+     * returns next line of user input
+     *
+     * @return input of user in String
+     */
     public String getInput() {
         if (this.sc.hasNextLine()) {
             return this.sc.nextLine();
@@ -108,10 +114,12 @@ public class Ui {
             System.out.println(num + ". " + taskType + " " + status + " " + item + "\n");
         } else if (task instanceof Deadline) { // if task is deadline
             Deadline actualTask = (Deadline) task;
-            System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n");
+            System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " +
+                    actualTask.getDeadline() + "\n");
         } else { // if task is event
             Event actualTask = (Event) task;
-            System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n");
+            System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " +
+                    actualTask.getTime() + "\n");
         }
         System.out.println("==============================================================\n");
     }
@@ -163,10 +171,15 @@ public class Ui {
             }
         }
 
-        throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
+        throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', " +
+                "expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
     }
 
-    // prints list of task that matches search
+    /**
+     * prints list of task that matches search
+     *
+     * @param ls a list of tasks from TaskList
+     */
     public void showSearchResults(List<Task> ls) {
         System.out.println("##############################################################\n");
         System.out.println("Here's your search result(s) :");
@@ -181,10 +194,12 @@ public class Ui {
                 System.out.println(num + ". " + taskType + " " + status + " " + item);
             } else if (task instanceof Deadline) { // if task is deadline
                 Deadline actualTask = (Deadline) task;
-                System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline());
+                System.out.println(num + ". " + taskType + " " +  status + " " + item + " -> by : " +
+                        actualTask.getDeadline());
             } else { // if task type if event
                 Event actualTask = (Event) task;
-                System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime());
+                System.out.println(num + ". " + taskType + " " + status + " " + item + " -> at : " +
+                        actualTask.getTime());
             }
 
         }

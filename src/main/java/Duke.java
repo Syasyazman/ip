@@ -77,10 +77,9 @@ public class Duke extends Application {
     }
 
     public void run() {
-        // introduce src.main.java.duke
+        // introduce duke
         this.ui.introDuke();
 
-        // get input
         String input = this.ui.getInput();
 
         // checks for next line of input
@@ -176,6 +175,9 @@ public class Duke extends Application {
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
     }
 
+    /**
+     * Introduces Deku when Gui application launches
+     */
     public void introDeku() {
         dialogContainer.getChildren()
                 .add(DialogBox.getDukeDialog(guiui.printIntro(), dekuDuke));
@@ -227,7 +229,6 @@ public class Duke extends Application {
     }
 
     public static void main(String[] args) throws DukeException {
-        // instantiate src.main.java.duke object
         Duke deku = new Duke("data/duke.txt");
         deku.run();
     }

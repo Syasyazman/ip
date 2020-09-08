@@ -16,7 +16,11 @@ public class Event extends Task {
         this.date = date;
     }
 
-    // returns deadline of task
+    /**
+     * Returns deadline of task
+     *
+     * @return deadline of task in String
+     */
     public String getTime() {
         return this.date != null
                 ? this.date.format(DateTimeFormatter.ofPattern("MMM d yyyy"))

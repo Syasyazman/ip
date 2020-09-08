@@ -30,7 +30,8 @@ public class Storage {
     public boolean hasFile() {
         String home = System.getProperty("user.home");
 
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data", "src.main.java.duke.txt");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data",
+                "src.main.java.duke.txt");
         return java.nio.file.Files.exists(path);
     }
 
@@ -54,10 +55,12 @@ public class Storage {
                         writer.write(taskType + " / " + status + " / " + item + "\n");
                     } else if (task instanceof Deadline) { // if task is deadline
                         Deadline actualTask = (Deadline) task;
-                        writer.write(taskType + " / " +  status + " / " + item + " / " + actualTask.getDeadline() + "\n");
+                        writer.write(taskType + " / " +  status + " / " + item + " / " +
+                                actualTask.getDeadline() + "\n");
                     } else { // if task is event
                         Event actualTask = (Event) task;
-                        writer.write(taskType + " / " + status + " / " + item + " / " + actualTask.getTime() + "\n");
+                        writer.write(taskType + " / " + status + " / " + item + " / " +
+                                actualTask.getTime() + "\n");
                     }
                 }
             } else {
@@ -90,53 +93,57 @@ public class Storage {
                     String status = arr[1];
                     String restOfTask = arr[2];
 
-                    if (taskType.equals("<T>")) { // if task is a to-do
-                        Task task = new Todo(restOfTask, "T");
-                        if (status.equals("[\u2713]")) { // task is done
-                            task.markAsDone();
-                        }
+                    switch (taskType) {
+                        case "<T>": // if task is a to-do
+                            Task taskTD = new Todo(restOfTask, "T");
+                            if (status.equals("[\u2713]")) { // task is done
+                                taskTD.markAsDone();
+                            }
 
-                        ls.add(task);
-                    } else if (taskType.equals("<D>")) { // if task is a deadline
-                        String[] taskArr = restOfTask.split(" / ");
-                        String item = taskArr[0];
-                        String deadline = taskArr[1];
+                            ls.add(taskTD);
+                            break;
+                        case "<D>": // if task is a deadline
+                            String[] taskArrD = restOfTask.split(" / ");
+                            String itemD = taskArrD[0];
+                            String deadlineD = taskArrD[1];
 
-                        LocalDate date = null;
+                            LocalDate dateD = null;
 
-                        try {
-                            date = ui.convertToLocalDate(arr[1]);
-                        } catch (IllegalArgumentException e) {
-                            // intentionally empty
-                        }
+                            try {
+                                dateD = ui.convertToLocalDate(arr[1]);
+                            } catch (IllegalArgumentException e) {
+                                // intentionally empty
+                            }
 
-                        Task task = new Deadline(item, "D",  deadline, date);
+                            Task taskD = new Deadline(itemD, "D",  deadlineD, dateD);
 
-                        if (status.equals("[\u2713]")) { // task is done
-                            task.markAsDone();
-                        }
+                            if (status.equals("[\u2713]")) { // task is done
+                                taskD.markAsDone();
+                            }
 
-                        ls.add(task);
-                    } else { // if task is an event
-                        String[] taskArr = restOfTask.split(" / ");
-                        String item = taskArr[0];
-                        String deadline = taskArr[1];
+                            ls.add(taskD);
+                            break;
+                        default: // if task is an event
+                            String[] taskArrE = restOfTask.split(" / ");
+                            String itemE = taskArrE[0];
+                            String deadlineE = taskArrE[1];
 
-                        LocalDate date = null;
+                            LocalDate dateE = null;
 
-                        try {
-                            date = ui.convertToLocalDate(arr[1]);
-                        } catch (IllegalArgumentException e) {
-                            // intentionally empty
-                        }
+                            try {
+                                dateE = ui.convertToLocalDate(arr[1]);
+                            } catch (IllegalArgumentException e) {
+                                // intentionally empty
+                            }
 
-                        Task task = new Event(item, "E", deadline, date);
+                            Task taskE = new Event(itemE, "E", deadlineE, dateE);
 
-                        if (status.equals("[\u2713]")) {
-                            task.markAsDone();
-                        }
+                            if (status.equals("[\u2713]")) {
+                                taskE.markAsDone();
+                            }
 
-                        ls.add(task);
+                            ls.add(taskE);
+                            break;
                     }
                 }
             } else {

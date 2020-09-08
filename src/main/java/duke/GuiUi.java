@@ -12,13 +12,21 @@ import java.util.List;
 public class GuiUi {
     public GuiUi() { }
 
-    // prints introduction of klaun
+    /**
+     * returns introduction message from deku
+     *
+     * @return introduction message in String
+     */
     public String printIntro() {
         return "Hiii I'm Deku (=^.^=) How are you doing today ?\n" +
                 "Is there anything I can help you with ?";
     }
 
-    // prints exit message for klaun
+    /**
+     * returns exit message for deku
+     *
+     * @return exit message in String
+     */
     public String printBye() {
         return "oh man ... bye ~~ o.o";
     }
@@ -138,10 +146,16 @@ public class GuiUi {
             }
         }
 
-        throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
+        throw new IllegalArgumentException("Invalid input for date. Given '"+strDate+"', " +
+                "expecting format yyyy-MM-dd HH:mm:ss.SSS or yyyy-MM-dd.");
     }
 
-    // prints list of task that matches search
+    /**
+     * returns list of task that matches search
+     *
+     * @param ls a list of tasks from TaskList
+     * @return a string of tasks
+     */
     public String showSearch(List<Task> ls) {
         String results = "Here's your search result(s) :\n\n";
         for (int i = 0; i < ls.size(); i++) {

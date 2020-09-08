@@ -24,6 +24,14 @@ public class ExitCommand extends Command {
         }
     }
 
+    /**
+     * Stores task list in hard disk and prints exit for Duke. Then returns response to user
+     *
+     * @param tasks a TaskList that contains a list of tasks
+     * @param guiui a GuiUi that interacts with user
+     * @param storage a Storage that deals with hard disk file
+     * @return a message response to user in String
+     */
     @Override
     public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
         try {
