@@ -28,6 +28,7 @@ public class FindCommand extends Command {
        // adds tasks which contains user input as substring
         for (Task task : ls) {
             if (task.getItem().contains(this.input)) {
+                assert task != null;
                 output.add(task);
             }
         }

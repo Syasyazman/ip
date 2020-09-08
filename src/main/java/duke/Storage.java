@@ -95,6 +95,7 @@ public class Storage {
 
                     switch (taskType) {
                         case "<T>": // if task is a to-do
+                            assert taskType.equals("<T>");
                             Task taskTD = new Todo(restOfTask, "T");
                             if (status.equals("[\u2713]")) { // task is done
                                 taskTD.markAsDone();
@@ -103,6 +104,7 @@ public class Storage {
                             ls.add(taskTD);
                             break;
                         case "<D>": // if task is a deadline
+                            assert taskType.equals("<D>");
                             String[] taskArrD = restOfTask.split(" / ");
                             String itemD = taskArrD[0];
                             String deadlineD = taskArrD[1];
@@ -124,6 +126,7 @@ public class Storage {
                             ls.add(taskD);
                             break;
                         default: // if task is an event
+                            assert taskType.equals("<E>");
                             String[] taskArrE = restOfTask.split(" / ");
                             String itemE = taskArrE[0];
                             String deadlineE = taskArrE[1];

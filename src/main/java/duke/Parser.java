@@ -16,20 +16,31 @@ public class Parser {
             return new ExitCommand();
         } else if (input.equals("list")) { // if user calls for list
             return new ListCommand();
-        } else if (input.split(" ")[0].equals("done")) { // if user wants to complete a task
-            return new DoneCommand(input);
-        } else if (input.split(" ")[0].equals("todo")) { // if task type is to-do
-            return new TodoCommand(input);
-        } else if (input.split(" ")[0].equals("deadline")) { // if task type is deadline
-            return new DeadlineCommand(input);
-        } else if (input.split(" ")[0].equals("event")) { // if task type is deadline
-            return new EventCommand(input);
-        } else if (input.split(" ")[0].equals("delete")) { // if user wants to delete a task
-            return new DeleteCommand(input);
-        } else if (input.split(" ")[0].equals("find")) { // if user wants to search a keyword
-            return new FindCommand(input.split(" ")[1]);
-        } else { // if input is not a task
-            return null;
+        } else { // if user wants to complete a task
+            String[] inputArr = input.split(" ");
+
+            switch (inputArr[0]) {
+                case "done": // if task type is to-do
+                    assert inputArr[0].equals("done");
+                    return new DoneCommand(input);
+                case "todo": // if task type is deadline
+                    assert inputArr[0].equals("todo");
+                    return new TodoCommand(input);
+                case "deadline": // if task type is deadline
+                    assert inputArr[0].equals("deadline");
+                    return new DeadlineCommand(input);
+                case "event":  // if task type is event
+                    assert inputArr[0].equals("event");
+                case "delete": // if user wants to delete a task
+                    assert inputArr[0].equals("delete");
+                    return new DeleteCommand(input);
+                case "find": // if user wants to search a keyword
+                    assert inputArr[0].equals("find");
+                    return new FindCommand(inputArr[1]);
+                default: // if input is not a task
+                    return null;
+            }
+
         }
     }
 }
