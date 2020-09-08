@@ -168,6 +168,7 @@ public class Ui {
                 return LocalDate.parse(strDate, formatter);
             } catch (Exception e) {
                 // intentionally empty
+                // to catch unsuccessful date parsing
             }
         }
 

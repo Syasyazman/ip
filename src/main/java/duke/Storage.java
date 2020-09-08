@@ -88,63 +88,13 @@ public class Storage {
                 while(sc.hasNextLine()) {
                     String line = sc.nextLine();
 
-                    String[] arr = line.split(" / ", 3);
-                    String taskType = arr[0];
-                    String status = arr[1];
-                    String restOfTask = arr[2];
+                    String[] inputArr = line.split(" / ", 3);
+                    String taskType = inputArr[0];
+                    String status = inputArr[1];
+                    String restOfTaskInfo = inputArr[2];
 
-                    switch (taskType) {
-                        case "<T>": // if task is a to-do
-                            Task taskTD = new Todo(restOfTask, "T");
-                            if (status.equals("[\u2713]")) { // task is done
-                                taskTD.markAsDone();
-                            }
-
-                            ls.add(taskTD);
-                            break;
-                        case "<D>": // if task is a deadline
-                            String[] taskArrD = restOfTask.split(" / ");
-                            String itemD = taskArrD[0];
-                            String deadlineD = taskArrD[1];
-
-                            LocalDate dateD = null;
-
-                            try {
-                                dateD = ui.convertToLocalDate(arr[1]);
-                            } catch (IllegalArgumentException e) {
-                                // intentionally empty
-                            }
-
-                            Task taskD = new Deadline(itemD, "D",  deadlineD, dateD);
-
-                            if (status.equals("[\u2713]")) { // task is done
-                                taskD.markAsDone();
-                            }
-
-                            ls.add(taskD);
-                            break;
-                        default: // if task is an event
-                            String[] taskArrE = restOfTask.split(" / ");
-                            String itemE = taskArrE[0];
-                            String deadlineE = taskArrE[1];
-
-                            LocalDate dateE = null;
-
-                            try {
-                                dateE = ui.convertToLocalDate(arr[1]);
-                            } catch (IllegalArgumentException e) {
-                                // intentionally empty
-                            }
-
-                            Task taskE = new Event(itemE, "E", deadlineE, dateE);
-
-                            if (status.equals("[\u2713]")) {
-                                taskE.markAsDone();
-                            }
-
-                            ls.add(taskE);
-                            break;
-                    }
+                    Task newTask = createTask(taskType, status, restOfTaskInfo, ui);
+                    ls.add(newTask);
                 }
             } else {
                 throw new FileNotFoundException("File not found");
@@ -154,6 +104,70 @@ public class Storage {
         }
 
         return ls;
+    }
+
+    /**
+     * Returns a task based on specific task type
+     *
+     * @param taskType type of task that is to be created
+     * @param status completion status of task
+     * @param restOfTaskInfo remaining task information
+     * @param ui deals with interaction with user
+     * @return a task object
+     */
+    public Task createTask(String taskType, String status, String restOfTaskInfo, Ui ui) {
+        switch (taskType) {
+            case "<T>": // if task is a to-do
+                Task taskTD = new Todo(restOfTaskInfo, "T");
+                if (status.equals("[\u2713]")) { // task is done
+                    taskTD.markAsDone();
+                }
+                return taskTD;
+            case "<D>": // if task is a deadline
+                String[] taskArrD = restOfTaskInfo.split(" / ");
+                String itemD = taskArrD[0];
+                String deadlineD = taskArrD[1];
+
+                LocalDate dateD = null;
+
+                try {
+                    dateD = ui.convertToLocalDate(deadlineD);
+                } catch (IllegalArgumentException e) {
+                    // intentionally empty
+                    // to catch unsuccessful date conversion
+                    // actual date will be given when creating task to compensate for it
+                }
+
+                Task taskD = new Deadline(itemD, "D",  deadlineD, dateD);
+
+                if (status.equals("[\u2713]")) { // task is done
+                    taskD.markAsDone();
+                }
+
+                return taskD;
+            default: // if task is an event
+                String[] taskArrE = restOfTaskInfo.split(" / ");
+                String itemE = taskArrE[0];
+                String deadlineE = taskArrE[1];
+
+                LocalDate dateE = null;
+
+                try {
+                    dateE = ui.convertToLocalDate(deadlineE);
+                } catch (IllegalArgumentException e) {
+                    // intentionally empty
+                    // to catch unsuccessful date conversion
+                    // actual date will be given when creating task to compensate for it
+                }
+
+                Task taskE = new Event(itemE, "E", deadlineE, dateE);
+
+                if (status.equals("[\u2713]")) {
+                    taskE.markAsDone();
+                }
+
+                return taskE;
+        }
     }
 
     /**

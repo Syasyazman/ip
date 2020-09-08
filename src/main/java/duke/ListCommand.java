@@ -16,9 +16,9 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        List<Task> ls = tasks.getls();
+        List<Task> taskLs = tasks.getls();
         int index = tasks.getIndex();
-        ui.getList(index, ls);
+        ui.getList(index, taskLs);
     }
 
     /**
@@ -31,8 +31,8 @@ public class ListCommand extends Command {
      */
     @Override
     public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
-        List<Task> ls = tasks.getls();
+        List<Task> taskLs = tasks.getls();
         int index = tasks.getIndex();
-        return guiui.getTaskList(index, ls);
+        return guiui.getTaskList(index, taskLs);
     }
 }
