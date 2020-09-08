@@ -24,9 +24,9 @@ public class DoneCommand extends Command {
         try {
             if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() &&
                     parseInt(input.split(" ", 2)[1]) > 0) {
-                int index = parseInt(input.split(" ", 2)[1]) - 1;
-                tasks.markDone(index);
-                ui.printMarkDone(index, tasks.getls());
+                int indexOfTask = parseInt(input.split(" ", 2)[1]) - 1;
+                tasks.markDone(indexOfTask);
+                ui.printMarkDone(indexOfTask, tasks.getls());
             } else {
                 throw new DukeException("invalid input: " + input);
             }
@@ -48,10 +48,10 @@ public class DoneCommand extends Command {
         try {
             if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() &&
                     parseInt(input.split(" ", 2)[1]) > 0) {
-                int index = parseInt(input.split(" ", 2)[1]) - 1;
-                tasks.markDone(index);
+                int indexOfTask = parseInt(input.split(" ", 2)[1]) - 1;
+                tasks.markDone(indexOfTask);
 
-                return guiui.printDone(index, tasks.getls());
+                return guiui.printDone(indexOfTask, tasks.getls());
             } else {
                 throw new DukeException("invalid input: " + input);
             }

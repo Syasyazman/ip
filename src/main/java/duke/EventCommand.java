@@ -23,18 +23,20 @@ public class EventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (input.contains(" ") && input.contains("/at")) {
-                String[] arr = input.split("/at ", 2); // split to get time of task
-                String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
+                String[] inputArr = input.split("/at ", 2); // split to get time of task
+                String item = inputArr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
 
                 LocalDate date = null;
 
                 try {
-                    date = ui.convertToLocalDate(arr[1]);
+                    date = ui.convertToLocalDate(inputArr[1]);
                 } catch (IllegalArgumentException e) {
                     // intentionally empty
+                    // to catch unsuccessful date conversion
+                    // actual date will be given when creating task to compensate for it
                 }
 
-                Task task = new Event(item, "E", arr[1], date);
+                Task task = new Event(item, "E", inputArr[1], date);
 
                 // add item to list
                 tasks.addToList(task); // add to-do task to ls
@@ -61,21 +63,23 @@ public class EventCommand extends Command {
     public String guiExecute(TaskList tasks, GuiUi guiui, Storage storage) {
         try {
             if (input.contains(" ") && input.contains("/at")) {
-                String[] arr = input.split("/at ", 2); // split to get time of task
-                String item = arr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
+                String[] inputArr = input.split("/at ", 2); // split to get time of task
+                String item = inputArr[0].split(" ", 2)[1]; // get item and remove "deadline" from string
 
                 LocalDate date = null;
 
                 try {
-                    date = guiui.convertToLocalDate(arr[1]);
+                    date = guiui.convertToLocalDate(inputArr[1]);
                 } catch (IllegalArgumentException e) {
                     // intentionally empty
+                    // to catch unsuccessful date conversion
+                    // actual date will be given when creating task to compensate for it
                 }
 
-                Task task = new Event(item, "E", arr[1], date);
+                Task task = new Event(item, "E", inputArr[1], date);
 
                 // add item to list
-                tasks.addToList(task); // add to-do task to ls
+                tasks.addToList(task); // add to-do tassk to ls
 
                 // print confirmation of adding task
                 return guiui.confirmAddToTaskList(task, tasks.getIndex());
