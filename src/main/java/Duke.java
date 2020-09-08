@@ -203,6 +203,7 @@ public class Duke extends Application {
      */
     private void handleUserInput() {
         String input = userInput.getText();
+        assert input != null;
         String response = getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, bakugoUser),
