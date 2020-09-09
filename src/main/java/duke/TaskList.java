@@ -1,6 +1,8 @@
 package duke;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.time.LocalDate;
 
 /**
  * Handles operations regarding user task list
@@ -80,5 +82,10 @@ public class TaskList {
         }
         System.out.println("You now have " + this.index + " task(s) in your list !\n");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    }
+
+    public Task getTaskByIndex(int indexOfTask) {
+        // todo : assert that index of task is in range
+        return this.ls.get(indexOfTask);
     }
 }

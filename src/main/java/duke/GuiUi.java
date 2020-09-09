@@ -219,4 +219,16 @@ public class GuiUi {
     public String showUnsuccessfulFileWrite() {
         return "Unsuccessful file writing :(";
     }
+
+    public String showInvalidEditDateOfTask() {
+        return "Oh no !! Your format should be \"edit (task no.) (new date)\"";
+    }
+
+    public String showInvalidTaskTypeEdit() {
+        return "Im so sorry but I only edit dates of deadlines or events !";
+    }
+
+    public String showInvalidIndexOfEditTask() {
+        return "Oops ... you should provide a valid task number to edit ~";
+    }
 }

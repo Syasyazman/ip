@@ -37,6 +37,9 @@ public class Parser {
                 case "find": // if user wants to search a keyword
                     assert inputArr[0].equals("find");
                     return new FindCommand(inputArr[1]);
+                case "edit": // if user wants to edit a task's date
+                    assert inputArr[0].equals("edit");
+                    return new EditDateCommand(input);
                 default: // if input is not a task
                     return null;
             }
