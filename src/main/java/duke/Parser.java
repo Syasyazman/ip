@@ -31,6 +31,7 @@ public class Parser {
                     return new DeadlineCommand(input);
                 case "event":  // if task type is event
                     assert inputArr[0].equals("event");
+                    return new EventCommand(input);
                 case "delete": // if user wants to delete a task
                     assert inputArr[0].equals("delete");
                     return new DeleteCommand(input);

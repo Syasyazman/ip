@@ -18,7 +18,7 @@ public class GuiUi {
      * @return introduction message in String
      */
     public String printIntro() {
-        return "Hiii I'm Deku (=^.^=) How are you doing today ?\n" +
+        return "Hi I'm Deku (=^.^=) How are you doing today ?\n" +
                 "Is there anything I can help you with ?";
     }
 
@@ -77,20 +77,18 @@ public class GuiUi {
         String taskType = task.getSign();
         int num = index + 1;
 
-        System.out.println("==============================================================\n");
-        System.out.println("Yayyyy !! Letsgedditt");
         if (task instanceof Todo) { // if task is to-do
             return "Yayyyy !! Letsgedditt\n\n" +
                     num + ". " + taskType + " " + status + " " + item;
         } else if (task instanceof Deadline) { // if task is deadline
             Deadline actualTask = (Deadline) task;
 
-            return "Yayyyy !! Letsgedditt\n" +
+            return "Yayyyy !! Letsgedditt\n\n" +
                     num + ". " + taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline();
         } else { // if task is event
             Event actualTask = (Event) task;
 
-            return "Yayyyy !! Letsgedditt\n" +
+            return "Yayyyy !! Letsgedditt\n\n" +
                     num + ". " + taskType + " " + status + " " + item + " -> at : " + actualTask.getTime();
         }
     }
@@ -114,13 +112,13 @@ public class GuiUi {
             Deadline actualTask = (Deadline) task;
 
             return "Okie ! I've added this task for you : \n" +
-                    taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n" +
+                    taskType + " " +  status + " " + item + " -> by : " + actualTask.getDeadline() + "\n\n" +
                     "You have a total of " + index + " task(s) in your list !";
         } else { // if task is event
             Event actualTask = (Event) task;
 
             return "Okie ! I've added this task for you : \n" +
-                    taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n" +
+                    taskType + " " + status + " " + item + " -> at : " + actualTask.getTime() + "\n\n" +
                     "You have a total of " + index + " task(s) in your list !";
 
         }
@@ -197,11 +195,11 @@ public class GuiUi {
     }
 
     public String showInvalidEventFormat() {
-        return "Oh no !! Your format should be \"event ____ /at ____\"";
+        return "Oh no !! Your format should be \"event <task> /at <date>\"";
     }
 
     public String showInvalidDeadlineFormat() {
-        return "Oh no !! Your format should be \"deadline ____ /by ____\"";
+        return "Oh no !! Your format should be \"deadline <task> /by <date>\"";
     }
 
     public String showInvalidTodoFormat() {
@@ -221,7 +219,7 @@ public class GuiUi {
     }
 
     public String showInvalidEditDateOfTask() {
-        return "Oh no !! Your format should be \"edit (task no.) (new date)\"";
+        return "Oh no !! Your format should be \"edit <task number> <new date>\"";
     }
 
     public String showInvalidTaskTypeEdit() {

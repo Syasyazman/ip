@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -43,8 +44,6 @@ public class Duke extends Application {
         this.ui = new Ui();
         this.guiui = new GuiUi();
         this.file = new File("data/duke.txt");
-
-
 
         try {
             if (storage.hasFile()) {
@@ -218,11 +217,7 @@ public class Duke extends Application {
         Command c = Parser.parse(input);
 
         if (c != null) { // input is valid
-            if (c instanceof ExitCommand) {
-                return c.guiExecute(this.tasks, this.guiui, this.storage);
-            } else {
-                return c.guiExecute(this.tasks, this.guiui, this.storage);
-            }
+            return c.guiExecute(this.tasks, this.guiui, this.storage);
         } else {
             return  guiui.showInvalidInput();
         }

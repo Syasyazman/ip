@@ -47,7 +47,7 @@ public class DeleteCommand extends Command {
             if (input.contains(" ") && parseInt(input.split(" ", 2)[1]) <= tasks.getIndex() &&
                     parseInt(input.split(" ", 2)[1]) > 0) {
                 tasks.deleteTask(parseInt(input.split(" ", 2)[1]) - 1);
-                return "Successfully deleted!!";
+                return "Successfully deleted !!";
             } else {
                 throw new DukeException("invalid input: " + input);
             }
