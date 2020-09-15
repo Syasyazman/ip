@@ -55,5 +55,18 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, dekuDuke)
         );
         userInput.clear();
+
+        if (response.equals("oh man ... bye ~~ o.o")) {
+            // terminate program
+            Thread thread = new Thread(() -> {
+                try {
+                    Thread.sleep(1500);
+                    Platform.exit();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+        }
     }
 }
