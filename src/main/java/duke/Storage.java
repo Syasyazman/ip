@@ -17,22 +17,11 @@ import java.util.Scanner;
  */
 public class Storage {
     protected File file;
+    protected String filepath;
 
     public Storage(String filepath) {
+        this.filepath = filepath;
         this.file = new File(filepath);
-    }
-
-    /**
-     * checks if hard disk file directory exists
-     *
-     * @return whether the hard disk file exists
-     */
-    public boolean hasFile() {
-        String home = System.getProperty("user.home");
-
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "Desktop", "CS2103", "Projects", "iP", "data",
-                "duke.txt");
-        return java.nio.file.Files.exists(path);
     }
 
     /**
@@ -43,28 +32,24 @@ public class Storage {
      */
     public void addTasksToFile(FileWriter writer, List<Task> ls) {
         try {
-            if (writer != null) {
-                for (Task task : ls) {
-                    // get details about task
-                    String item = task.getItem();
-                    String status = task.getStatus();
-                    String taskType = task.getSign();
+            for (Task task : ls) {
+                // get details about task
+                String item = task.getItem();
+                String status = task.getStatus();
+                String taskType = task.getSign();
 
-                    // check task type
-                    if (task instanceof Todo) { // if task is to-do
-                        writer.write(taskType + " / " + status + " / " + item + "\n");
-                    } else if (task instanceof Deadline) { // if task is deadline
-                        Deadline actualTask = (Deadline) task;
-                        writer.write(taskType + " / " +  status + " / " + item + " / " +
-                                actualTask.getDeadline() + "\n");
-                    } else { // if task is event
-                        Event actualTask = (Event) task;
-                        writer.write(taskType + " / " + status + " / " + item + " / " +
-                                actualTask.getTime() + "\n");
-                    }
+                // check task type
+                if (task instanceof Todo) { // if task is to-do
+                    writer.write(taskType + " / " + status + " / " + item + "\n");
+                } else if (task instanceof Deadline) { // if task is deadline
+                    Deadline actualTask = (Deadline) task;
+                    writer.write(taskType + " / " +  status + " / " + item + " / " +
+                            actualTask.getDeadline() + "\n");
+                } else { // if task is event
+                    Event actualTask = (Event) task;
+                    writer.write(taskType + " / " + status + " / " + item + " / " +
+                            actualTask.getTime() + "\n");
                 }
-            } else {
-                throw new IOException("invalid writer");
             }
         } catch (IOException e) {
             System.out.println("An error occurred: invalid writer");
@@ -82,10 +67,15 @@ public class Storage {
         List<Task> ls = new ArrayList<>();
 
         try {
-            if (this.file != null) {
+            File directory = new File("data/");
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+
+            if (this.file.exists()) {
                 sc = new Scanner(this.file);
 
-                while(sc.hasNextLine()) {
+                while (sc.hasNextLine()) {
                     String line = sc.nextLine();
 
                     String[] inputArr = line.split(" / ", 3);
@@ -97,10 +87,14 @@ public class Storage {
                     ls.add(newTask);
                 }
             } else {
-                throw new FileNotFoundException("File not found");
+                try {
+                    this.file.createNewFile();
+                } catch (IOException e) {
+                    ui.showCannotCreateFileError();
+                }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found!!");
+            ui.showFileNotFoundError();
         }
 
         return ls;
@@ -177,7 +171,7 @@ public class Storage {
      * @throws IOException
      */
     public void writeToFile(TaskList tasks) throws IOException {
-        FileWriter writer = new FileWriter(file);
+        FileWriter writer = new FileWriter(this.file);
         this.addTasksToFile(writer, tasks.getls());
         writer.close();
     }

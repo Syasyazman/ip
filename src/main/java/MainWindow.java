@@ -8,8 +8,6 @@ import javafx.scene.layout.VBox;
 
 import javafx.application.Platform;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Controller for MainWindow. Provides the layout for the other controls.
  */

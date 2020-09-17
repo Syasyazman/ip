@@ -2,10 +2,7 @@ import duke.*;
 
 import java.io.File;
 
-import java.util.ArrayList;
-
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -16,8 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.fxml.FXML;
 
 /**
  * Main class for Duke
@@ -46,31 +41,23 @@ public class Duke extends Application {
         this.file = new File("data/duke.txt");
 
         try {
-            if (storage.hasFile()) {
-                this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
-            } else {
-                throw new DukeException("file does not exist");
-            }
-        } catch (DukeException e) {
-            this.ui.showFileLoadingError();
-            this.tasks = new TaskList(new ArrayList<>());
+            this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
+        } catch (Exception e) {
+            ui.showFileLoadingError();
         }
     }
+
 
     public Duke(String filepath) {
         this.storage = new Storage(filepath);
         this.ui = new Ui();
         this.guiui = new GuiUi();
+        this.file = new File(filepath);
 
         try {
-            if (storage.hasFile()) {
-                this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
-            } else {
-                throw new DukeException("file does not exist");
-            }
-        } catch (DukeException e) {
-            this.ui.showFileLoadingError();
-            this.tasks = new TaskList(new ArrayList<>());
+            this.tasks = new TaskList(storage.loadDataFromFile(this.ui));
+        } catch (Exception e) {
+            ui.showFileLoadingError();
         }
     }
 
