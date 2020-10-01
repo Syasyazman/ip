@@ -30,6 +30,11 @@ public class Main extends Application {
             fxmlLoader.<MainWindow>getController().getContainer().getChildren()
                     .add(DialogBox.getDukeDialog(guiui.printIntro(), dekuDuke));
             stage.show();
+            stage.setTitle("Deku");
+            stage.setResizable(false);
+            stage.setMinHeight(600.0);
+            stage.setMinWidth(400.0);
+            ap.setPrefSize(400.0, 600.0);
         } catch (IOException e) {
             e.printStackTrace();
         }

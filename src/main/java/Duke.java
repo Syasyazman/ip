@@ -62,7 +62,7 @@ public class Duke extends Application {
     }
 
     public void run() {
-        // introduce duke
+        // introduce deku
         this.ui.introDuke();
 
         String input = this.ui.getInput();
