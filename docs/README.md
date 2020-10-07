@@ -24,9 +24,16 @@ and adding the new task(s) again.
 ### List of Tasks
 User can view a list of task(s) that have been added by the user.
 
+### Exit program
+User can exit the program.
+
 ## Usage
 
 The terms that are bracketed in `< >` are subjected to user input. 
+
+--------------------------------------------------------------------------
+
+Todo command:
 
 ### `todo <task>`
 
@@ -42,6 +49,9 @@ Okie! I've add this task for you :
 
 You have a total of __ task(s) in your list !
 ```
+--------------------------------------------------------------------------
+
+Deadline command:
 
 ### `deadline  <task> /by <date>`
 
@@ -57,6 +67,9 @@ Okie! I've add this task for you :
 
 You have a total of __ task(s) in your list !
 ```
+--------------------------------------------------------------------------
+
+Event command:
 
 ### `event <task> /at <date>`
 
@@ -72,6 +85,9 @@ Okie! I've add this task for you :
 
 You have a total of __ task(s) in your list !
 ```
+--------------------------------------------------------------------------
+
+Done command:
 
 ### `done <task number>`
 
@@ -87,6 +103,10 @@ Yayyyy !! Letsgedditt
 <D> [x] buy shoes -> by : Sep 14 2020
 ```
 
+--------------------------------------------------------------------------
+
+Delete command:
+
 ### `delete <task number>`
 
 Example of usage: 
@@ -98,6 +118,10 @@ Expected outcome:
 ```
 Successfully deleted !!
 ```
+
+--------------------------------------------------------------------------
+
+Find command:
 
 ### `find <keyword>`
 
@@ -113,6 +137,10 @@ Here's your search result(s) :
 <E> [x] gym -> at : 7pm
 ```
 
+--------------------------------------------------------------------------
+
+Edit command:
+
 ### `edit <task number> <new date>`
 
 Example of usage: 
@@ -124,6 +152,10 @@ Expected outcome:
 ```
 Successfully updated !!
 ```
+
+--------------------------------------------------------------------------
+
+List command:
 
 ### `list`
 
@@ -137,4 +169,20 @@ Expected outcome:
 Here's your amazing task list :
 
 1.<T> [X] eat lunch
+```
+
+--------------------------------------------------------------------------
+
+Bye command:
+
+### `bye`
+
+Example of usage: 
+
+`bye`
+
+Expected outcome:
+
+```
+oh man ... bye ~~ o.o
 ```
