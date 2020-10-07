@@ -21,6 +21,9 @@ User can find task(s) that contain a desired keyword.
 User can edit the date(s) of **DEADLINE** or **EVENT** task(s) without having to remove the current task(s) permanently 
 and adding the new task(s) again.
 
+### List of Tasks
+User can view a list of task(s) that have been added by the user.
+
 ## Usage
 
 The terms that are bracketed in `< >` are subjected to user input. 
@@ -122,3 +125,16 @@ Expected outcome:
 Successfully updated !!
 ```
 
+### `list`
+
+Example of usage: 
+
+`list`
+
+Expected outcome:
+
+```
+Here's your amazing task list :
+
+1.<T> [X] eat lunch
+```
